@@ -1,0 +1,14 @@
+[project]
+name = "blender-jev-review"
+version = "0.1.0"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+description = "Exact-object Jev review findings inside Blender"
+
+[tool.ruff]
+line-length = 140
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
