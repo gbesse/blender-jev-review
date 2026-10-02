@@ -1,0 +1,23 @@
+schema_version = "1.0.0"
+id = "blender_jev_review"
+version = "0.1.1"
+name = "Blender Jev Review"
+tagline = "Review selected metadata and focus exact cited objects"
+maintainer = "Guillaume Besse"
+type = "add-on"
+website = "https://github.com/gbesse/blender-jev-review"
+tags = ["3D View"]
+blender_version_min = "4.3.0"
+license = ["SPDX:MIT"]
+
+[permissions]
+network = "Send selected metadata to TypeSafe AI on request"
+
+[build]
+paths = [
+  "__init__.py",
+  "addon.py",
+  "blender_manifest.toml",
+  "client.py",
+  "core.py",
+]
