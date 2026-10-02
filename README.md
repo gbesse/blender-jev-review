@@ -8,6 +8,10 @@ Zip the `blender_jev_review` directory, then use **Edit → Preferences → Add-
 
 The shipped alpha pack checks ambiguous naming, suspicious scale metadata, and unclear material naming. These are review hints—not geometry validation, accessibility certification, or a replacement for an art lead.
 
+## Try the two-pass review offline
+
+Run `python3 -m examples.two_pass_review`. A synthetic first answer raises an ambiguous-name issue; a second answer points to a selected object ID. The example also shows an invented object ID being rejected. No Blender installation, API key or network call is required, and this does not replace an in-host add-on test.
+
 ## Test
 
 ```bash
