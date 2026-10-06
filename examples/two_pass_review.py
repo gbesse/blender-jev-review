@@ -17,7 +17,7 @@ PACK = {
 objects = selected_objects(
     [
         {"name": "Cube.001", "type": "MESH", "dimensions": [1, 1, 1]},
-        {"name": "Hero", "type": "MESH", "dimensions": [1, 2, 1]},
+        {"name": "Cube.001", "type": "MESH", "dimensions": [1, 2, 1]},
     ]
 )
 first = detection_request(objects, PACK)
@@ -25,8 +25,9 @@ first_answer = {"model": "jev-1.13.0", "answers": {"name": {"type": "noul", "nou
 validate_response(first_answer, first["questions"])
 issues = issues_to_locate(first_answer, PACK)
 second = location_request(objects, issues)
-second_answer = {"model": "jev-1.13.0", "answers": {"name": {"type": "choice", "choice": "object_1"}}, "usage": {"input_tokens": 10}}
+second_answer = {"model": "jev-1.13.0", "answers": {"name": {"type": "choice", "choice": "object_2"}}, "usage": {"input_tokens": 10}}
 validate_response(second_answer, second["questions"])
+assert objects[0]["name"] == objects[1]["name"] and objects[0]["id"] != objects[1]["id"]
 try:
     validate_response(
         {"model": "jev-1.13.0", "answers": {"name": {"type": "choice", "choice": "invented"}}, "usage": {"input_tokens": 10}},
