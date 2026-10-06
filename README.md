@@ -10,6 +10,8 @@ The shipped alpha pack checks ambiguous naming, suspicious scale metadata, and u
 
 ## Try the two-pass review offline
 
+The synthetic example now selects two objects with the same visible name and locates the second one by its stable candidate ID. Run `python3 -m examples.two_pass_review`; the script also rejects an invented object ID. / L'exemple distingue deux objets de même nom par identifiant et rejette un identifiant inventé. / El ejemplo distingue dos objetos con el mismo nombre por identificador y rechaza uno inventado.
+
 Run `python3 -m examples.two_pass_review`. A synthetic first answer raises an ambiguous-name issue; a second answer points to a selected object ID. The example also shows an invented object ID being rejected. No Blender installation, API key or network call is required, and this does not replace an in-host add-on test.
 
 ## Test
