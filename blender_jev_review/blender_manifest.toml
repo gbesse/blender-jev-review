@@ -1,6 +1,6 @@
 schema_version = "1.0.0"
 id = "blender_jev_review"
-version = "0.1.1"
+version = "0.1.2"
 name = "Blender Jev Review"
 tagline = "Review selected metadata and focus exact cited objects"
 maintainer = "Guillaume Besse"
