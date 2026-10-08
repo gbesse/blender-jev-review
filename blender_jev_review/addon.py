@@ -32,11 +32,13 @@ PACK = {
 }
 
 _results = []
+_reviewed_objects = {}
 
 
 def _snapshot(context):
     raw = []
-    for obj in context.selected_objects:
+    selected = list(context.selected_objects)
+    for obj in selected:
         raw.append(
             {
                 "name": obj.name,
@@ -46,7 +48,7 @@ def _snapshot(context):
                 "materials": [slot.material.name for slot in obj.material_slots if slot.material],
             }
         )
-    return selected_objects(raw)
+    return selected_objects(raw), {f"object_{index + 1}": obj for index, obj in enumerate(selected)}
 
 
 class JEV_OT_review(Operator):
@@ -55,22 +57,26 @@ class JEV_OT_review(Operator):
     bl_options = {"REGISTER"}
 
     def execute(self, context):
-        global _results
+        global _results, _reviewed_objects
         try:
-            objects = _snapshot(context)
+            objects, reviewed_objects = _snapshot(context)
             first_request = detection_request(objects, PACK)
             first = call_jev(first_request, context.window_manager.jev_api_key)
             issues = issues_to_locate(first, PACK)
             if not issues:
                 _results = []
+                _reviewed_objects = {}
                 self.report({"INFO"}, "No issue crossed the declared thresholds")
                 return {"FINISHED"}
             second_request = location_request(objects, issues)
             second = call_jev(second_request, context.window_manager.jev_api_key)
             _results = findings(objects, issues, second)
+            _reviewed_objects = reviewed_objects
             self.report({"INFO"}, f"{len(_results)} exact-object findings")
             return {"FINISHED"}
         except Exception as error:  # Blender operators surface errors through reports.
+            _results = []
+            _reviewed_objects = {}
             self.report({"ERROR"}, str(error))
             return {"CANCELLED"}
 
@@ -78,11 +84,15 @@ class JEV_OT_review(Operator):
 class JEV_OT_focus(Operator):
     bl_idname = "jev.focus_object"
     bl_label = "Focus finding"
-    object_name: StringProperty()
+    object_id: StringProperty()
 
     def execute(self, context):
-        obj = bpy.data.objects.get(self.object_name)
-        if obj is None:
+        obj = _reviewed_objects.get(self.object_id)
+        try:
+            exists = obj is not None and bpy.data.objects.get(obj.name) is obj
+        except ReferenceError:
+            exists = False
+        if not exists:
             self.report({"ERROR"}, "Cited object no longer exists")
             return {"CANCELLED"}
         bpy.ops.object.select_all(action="DESELECT")
@@ -105,7 +115,7 @@ class JEV_PT_panel(Panel):
         for result in _results:
             row = layout.row()
             operator = row.operator("jev.focus_object", text=f"{result['issue']}: {result['object_name']}", icon="RESTRICT_SELECT_OFF")
-            operator.object_name = result["object_name"]
+            operator.object_id = result["object_id"]
 
 
 CLASSES = (JEV_OT_review, JEV_OT_focus, JEV_PT_panel)
