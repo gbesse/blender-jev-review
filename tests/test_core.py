@@ -22,7 +22,8 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(self.objects[0]["name"], "Cube.001")
         with self.assertRaisesRegex(ValueError, "select"):
             selected_objects([])
-        self.assertEqual(len(selected_objects([{"name": str(i), "type": "EMPTY"} for i in range(300)])), 255)
+        with self.assertRaisesRegex(ValueError, "at most 255"):
+            selected_objects([{"name": str(i), "type": "EMPTY"} for i in range(300)])
 
     def test_two_pass_finds_exact_object(self):
         first_request = detection_request(self.objects, PACK)

@@ -25,3 +25,11 @@ python3 -m compileall -q blender_jev_review
 No test contacts Jev. Blender was not installed in the build environment, so add-on registration and viewport focus still require an in-host smoke test.
 
 MIT — see [LICENSE](LICENSE).
+
+## October 2026 improvement · Amélioration d’octobre 2026 · Mejora de octubre de 2026
+
+A selection above 255 objects now stops the review instead of silently dropping objects. Focus uses the reviewed object ID and reports a deleted object.
+
+Une sélection de plus de 255 objets arrête désormais la revue au lieu d’omettre des objets sans avertissement. La focalisation utilise l’identifiant revu et signale un objet supprimé.
+
+Una selección de más de 255 objetos detiene la revisión en vez de omitir objetos sin aviso. El enfoque usa el identificador revisado y avisa si se eliminó el objeto.

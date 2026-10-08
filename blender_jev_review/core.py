@@ -18,8 +18,10 @@ def validate_pack(pack):
 
 def selected_objects(objects):
     """Turn Blender-shaped dictionaries into bounded, stable candidates."""
+    if len(objects) > 255:
+        raise ValueError("select at most 255 objects for one review")
     result = []
-    for index, obj in enumerate(objects[:255]):
+    for index, obj in enumerate(objects):
         result.append(
             {
                 "id": f"object_{index + 1}",
@@ -97,4 +99,3 @@ def findings(objects, issues, response):
         if obj:
             output.append({"issue": issue["label"], "object_name": obj["name"], "object_id": obj["id"]})
     return output
-
