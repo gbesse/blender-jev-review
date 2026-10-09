@@ -33,3 +33,7 @@ A selection above 255 objects now stops the review instead of silently dropping 
 Une sélection de plus de 255 objets arrête désormais la revue au lieu d’omettre des objets sans avertissement. La focalisation utilise l’identifiant revu et signale un objet supprimé.
 
 Una selección de más de 255 objetos detiene la revisión en vez de omitir objetos sin aviso. El enfoque usa el identificador revisado y avisa si se eliminó el objeto.
+
+## Contrôle d’adoption · Adoption check · Comprobación de adopción
+
+[Français : essayer un cas concret](examples/adoption-check.md) · [English: try a concrete case](examples/adoption-check.md) · [Español: pruebe un caso concreto](examples/adoption-check.md).
