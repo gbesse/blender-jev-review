@@ -42,10 +42,7 @@ def detection_request(objects, pack):
     return {
         "model": MODEL,
         "state": {"selected_objects": objects},
-        "questions": {
-            issue["id"]: {"type": "noul", "instructions": issue["instructions"]}
-            for issue in pack["issues"]
-        },
+        "questions": {issue["id"]: {"type": "noul", "instructions": issue["instructions"]} for issue in pack["issues"]},
     }
 
 
@@ -99,3 +96,29 @@ def findings(objects, issues, response):
         if obj:
             output.append({"issue": issue["label"], "object_name": obj["name"], "object_id": obj["id"]})
     return output
+
+
+def selection_diff(before, after):
+    import hashlib
+    import json
+
+    error = "Sélection invalide / Invalid selection / Selección inválida"
+
+    def index(rows):
+        if not isinstance(rows, list) or len(rows) > 255:
+            raise ValueError(error)
+        result = {}
+        for row in rows:
+            if not isinstance(row, dict) or not isinstance(row.get("id"), str) or not row["id"] or row["id"] in result:
+                raise ValueError(error)
+            result[row["id"]] = hashlib.sha256(json.dumps(row, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+        return result
+
+    a, b = index(before), index(after)
+    return {
+        "added": sorted(b.keys() - a.keys()),
+        "removed": sorted(a.keys() - b.keys()),
+        "changed": sorted(k for k in a.keys() & b.keys() if a[k] != b[k]),
+        "unchanged": a == b,
+        "host_validated": False,
+    }

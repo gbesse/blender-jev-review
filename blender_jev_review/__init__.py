@@ -3,7 +3,7 @@
 bl_info = {
     "name": "Jev Selected Object Review",
     "author": "Guillaume Besse",
-    "version": (0, 1, 0),
+    "version": (0, 1, 3),
     "blender": (4, 3, 0),
     "location": "View3D > Sidebar > Jev",
     "description": "Review selected object metadata and focus exact cited objects",
