@@ -37,3 +37,12 @@ Una selección de más de 255 objetos detiene la revisión en vez de omitir obje
 ## Contrôle d’adoption · Adoption check · Comprobación de adopción
 
 [Français : essayer un cas concret](examples/adoption-check.md) · [English: try a concrete case](examples/adoption-check.md) · [Español: pruebe un caso concreto](examples/adoption-check.md).
+
+
+## 2026-11-05 — FR / EN / ES
+
+FR : `selection_diff(before,after)` compare des snapshots sélectionnés et montre objets ajoutés, retirés ou modifiés même si le nom reste identique. Identifiants fournis par collecteur ; aucune modification Blender ni raccordement automatique à l’UI. Test Python pur, host Blender non exécuté.
+
+EN: `selection_diff(before,after)` compares selected snapshots and reports added, removed or changed objects even when names match. Collector supplies IDs; no Blender changes or automatic UI wiring. Pure Python tests, Blender host not executed.
+
+ES: `selection_diff(before,after)` compara selecciones e informa objetos añadidos, retirados o cambiados aunque coincida nombre. Colector aporta identificadores; sin modificar Blender ni conexión automática a UI. Pruebas Python puras, host Blender no ejecutado.
